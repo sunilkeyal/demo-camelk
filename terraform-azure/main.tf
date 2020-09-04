@@ -13,24 +13,24 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+resource "azurerm_resource_group" "camelk-demo" {
+  name     = "camelk-demo-resources"
   location = "East US"
 }
 
-resource "azurerm_container_registry" "example" {
-  name                     = "exampleContainerRegistry1"
-  resource_group_name      = azurerm_resource_group.example.name
-  location                 = azurerm_resource_group.example.location
+resource "azurerm_container_registry" "camelk-demo" {
+  name                     = "CamelkDemoContainerRegistry"
+  resource_group_name      = azurerm_resource_group.camelk-demo.name
+  location                 = azurerm_resource_group.camelk-demo.location
   sku                      = "Basic"
   admin_enabled            = false
 }
 
-resource "azurerm_kubernetes_cluster" "example" {
-  name                = "example-aks"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  dns_prefix          = "example-aks"
+resource "azurerm_kubernetes_cluster" "camelk-demo" {
+  name                = "camelk-demo-aks"
+  location            = azurerm_resource_group.camelk-demo.location
+  resource_group_name = azurerm_resource_group.camelk-demo.name
+  dns_prefix          = "camelk-demo-aks"
 
   default_node_pool {
     name       = "default"
@@ -66,13 +66,13 @@ resource "azurerm_kubernetes_cluster" "example" {
 }
 
 output "client_certificate" {
-  value = azurerm_kubernetes_cluster.example.kube_config.0.client_certificate
+  value = azurerm_kubernetes_cluster.camelk-demo.kube_config.0.client_certificate
 }
 
 output "kube_config" {
-  value = azurerm_kubernetes_cluster.example.kube_config_raw
+  value = azurerm_kubernetes_cluster.camelk-demo.kube_config_raw
 }
 
 output "client_key" {
-  value = azurerm_kubernetes_cluster.example.kube_config.0.client_key
+  value = azurerm_kubernetes_cluster.camelk-demo.kube_config.0.client_key
 }
